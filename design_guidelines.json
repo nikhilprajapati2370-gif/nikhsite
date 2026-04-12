@@ -1,0 +1,101 @@
+{
+  "theme": "dark",
+  "archetype": "7 (Electric & Neon)",
+  "color_palette": {
+    "background": "#050505",
+    "foreground": "#F5F5F5",
+    "card": "#0A0A0B",
+    "card_foreground": "#E5E5E5",
+    "popover": "#0A0A0B",
+    "popover_foreground": "#E5E5E5",
+    "primary": "#FACC15",
+    "primary_foreground": "#050505",
+    "secondary": "#111113",
+    "secondary_foreground": "#FACC15",
+    "muted": "#1A1A1D",
+    "muted_foreground": "#A1A1AA",
+    "accent": "#00FF66",
+    "accent_foreground": "#050505",
+    "destructive": "#FF3366",
+    "destructive_foreground": "#FFFFFF",
+    "border": "rgba(255, 255, 255, 0.1)",
+    "input": "rgba(255, 255, 255, 0.05)",
+    "ring": "#FACC15"
+  },
+  "typography": {
+    "heading_font": "Outfit, sans-serif",
+    "body_font": "'JetBrains Mono', monospace",
+    "font_imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;800&display=swap');"
+    ],
+    "h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter",
+    "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight",
+    "h3": "text-xl sm:text-2xl font-semibold",
+    "h4": "text-lg sm:text-xl font-medium",
+    "body": "text-base leading-relaxed",
+    "small_label": "text-xs font-bold uppercase tracking-[0.2em]"
+  },
+  "spacing_and_layout": {
+    "philosophy": "Generous Spacing for Marketing, Technical Dense Grid for Admin/Dashboard.",
+    "marketing_grid": "Bento 'Tetris' Grid (grid-cols-1 md:grid-cols-8 lg:grid-cols-12, gap-8)",
+    "admin_grid": "Control Room Grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4, gap-4)",
+    "padding_scale": "p-4, p-8, p-12, p-24",
+    "container_borders": "Containers with borders must use internal padding p-6 or p-8"
+  },
+  "surfaces_and_micro_themes": {
+    "header": "Crystal Glassmorphism: bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-sm",
+    "product_cards": "Technical Grid Look: bg-card border border-white/10. Hover: -translate-y-1 border-primary/50 shadow-[0_0_15px_rgba(250,204,21,0.15)]",
+    "admin_cards": "Flat solid background, 1px subtle border, no shadow",
+    "hero_overlay": "bg-gradient-to-r from-black/90 via-black/50 to-transparent"
+  },
+  "motion_and_interactions": {
+    "libraries": [
+      "framer-motion",
+      "lenis",
+      "@tsparticles/react",
+      "@tsparticles/engine",
+      "@tsparticles/slim"
+    ],
+    "hover_states": "transition-all duration-300 ease-out",
+    "focus_states": "focus:ring-2 focus:ring-primary focus:outline-none focus:ring-offset-2 focus:ring-offset-background",
+    "page_transitions": "Fade and slight slide up using framer-motion"
+  },
+  "icons": {
+    "library": "@phosphor-icons/react",
+    "style": "duotone or regular, depending on context. Use phosphor for a crisp technical feel."
+  },
+  "components_strategy": {
+    "buttons": "Sharp corners or slight radius (rounded-md). High contrast. Primary buttons are Cyber Yellow with Black text.",
+    "forms": "Use Shadcn customized to match dark theme (darker inputs, white/10 borders).",
+    "navigation": "Sticky top bar, z-50. Always visible links on desktop."
+  },
+  "media": {
+    "images": {
+      "logo": "https://static.prod-images.emergentagent.com/jobs/fbbf5e11-a06f-493e-87ed-c7fe6d3ad457/images/954e68fe1870710c3a5c9b3b5e4655815c901ec6751c40337581ac8104ebab34.png",
+      "hero_background": "https://static.prod-images.emergentagent.com/jobs/fbbf5e11-a06f-493e-87ed-c7fe6d3ad457/images/55ef885881359dcbf3821536f1bad6770938bf11ec001d581c1491574c8e2f4f.png",
+      "secondary_banner": "https://images.unsplash.com/photo-1553406830-1c853b38df08?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTN8MHwxfHNlYXJjaHwxfHxyYXNwYmVycnklMjBwaSUyMGJvYXJkfGVufDB8fHx8MTc3NDc5MzMxOHww&ixlib=rb-4.1.0&q=85",
+      "categories": {
+        "Microcontrollers": "https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwzfHxhcmR1aW5vJTIwbWljcm9jb250cm9sbGVyJTIwYm9hcmR8ZW58MHx8fHwxNzc0NzkzMjk1fDA&ixlib=rb-4.1.0&q=85",
+        "Sensors_and_Modules": "https://static.prod-images.emergentagent.com/jobs/fbbf5e11-a06f-493e-87ed-c7fe6d3ad457/images/1517879035b6ca5709ff62ac83bd3a6c96632ee9f49f1865b2557bec323a9aec.png",
+        "Robotics_and_Motors": "https://images.pexels.com/photos/8438863/pexels-photo-8438863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "Development_Boards": "https://images.pexels.com/photos/10635975/pexels-photo-10635975.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "Electronic_Components": "https://images.pexels.com/photos/159201/circuit-circuit-board-resistor-computer-159201.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "3D_Printing": "https://images.pexels.com/photos/36439579/pexels-photo-36439579.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "IoT_and_Wireless": "https://static.prod-images.emergentagent.com/jobs/fbbf5e11-a06f-493e-87ed-c7fe6d3ad457/images/a46b6921d8290fe788136be70d337cbfd63f83de22cbb10c1d657781d5f30e4c.png"
+      }
+    }
+  },
+  "accessibility_and_testing": {
+    "contrast": "Maintain APCA standards. Text over images must have shadow or dark overlays.",
+    "testing_attributes": "All interactive elements MUST have data-testid attributes (e.g., data-testid='checkout-button')."
+  },
+  "instructions_to_main_agent": [
+    "Load JetBrains Mono and Outfit via Google Fonts in index.css.",
+    "Configure Tailwind with the provided color variables using CSS custom properties in index.css.",
+    "Install libraries: yarn add @phosphor-icons/react framer-motion @tsparticles/react @tsparticles/engine @tsparticles/slim lenis",
+    "For the Hero Section, use the provided hero_background image with a heavy dark gradient overlay (bg-gradient-to-r from-black/90 via-black/50 to-transparent) and initialize TSParticles for a futuristic floating data/grid effect.",
+    "The e-commerce layout should have a rigid, technical grid. Use border-white/10 extensively on cards. Hover effects should introduce Cyber Yellow borders and glow.",
+    "Use JetBrains Mono specifically for product prices, SKUs, and data tables to enhance the 'maker/developer' feel.",
+    "Admin Dashboard must be highly dense (Mode B), completely ditching generous spacing in favor of compact, high-contrast rows."
+  ]
+}
