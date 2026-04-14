@@ -43,9 +43,8 @@ function App() {
         <AuthProvider>
           <CartProvider>
             <Routes>
-               
-              <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/account" element={<AccountPage />} /
+               <Route path="/account" element={<AccountPage />} />
+               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/:id" element={<ProductDetailPage />} />
