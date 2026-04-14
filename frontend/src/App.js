@@ -11,8 +11,6 @@ import CheckoutPage from "./pages/CheckoutPage";
 import AuthPage from "./pages/AuthPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
-import AccountPage from "./pages/AccountPage";
-import OrdersPage from "./pages/OrdersPage";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -43,8 +41,7 @@ function App() {
         <AuthProvider>
           <CartProvider>
             <Routes>
-               <Route path="/account" element={<AccountPage />} />
-               <Route path="/orders" element={<OrdersPage />} />
+             
               <Route path="/" element={<LandingPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/:id" element={<ProductDetailPage />} />
