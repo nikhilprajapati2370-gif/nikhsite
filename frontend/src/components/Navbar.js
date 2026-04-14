@@ -142,6 +142,19 @@ const Navbar = () => {
                       <Link to="/admin" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-300 hover:bg-muted hover:text-primary transition-colors" data-testid="admin-link">
                         <LayoutDashboard size={14} /> Admin Panel
                       </Link>
+                     <Link
+                      to="/account"
+                      className="block px-4 py-2 text-sm text-gray-300 hover:bg-muted hover:text-primary"
+                    >
+                      My Account
+                    </Link>
+
+                    <Link
+                      to="/orders"
+                      className="block px-4 py-2 text-sm text-gray-300 hover:bg-muted hover:text-primary"
+                    >
+                      My Orders
+                    </Link>
                     )}
                     <button
                       onClick={logout}
