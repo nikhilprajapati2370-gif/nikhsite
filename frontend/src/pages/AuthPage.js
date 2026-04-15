@@ -151,7 +151,7 @@ const AuthPage = ({ mode = "login" }) => {
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  placeholder="Your Nmane"
+                  placeholder="Your Name"
                   required={!isLogin}
                   className="w-full bg-input border border-white/10 text-white text-sm px-4 py-3 rounded-md focus:outline-none focus:border-primary/50 focus:bg-white/5 transition-all placeholder-gray-600"
                   data-testid="name-input"
@@ -218,6 +218,17 @@ const AuthPage = ({ mode = "login" }) => {
               className="w-full btn-primary py-3 rounded-md text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
               data-testid="auth-submit-button"
             >
+                {isLogin && (
+  <div className="text-right mt-2">
+    <button
+      type="button"
+      onClick={() => navigate("/forgot-password")}
+      className="text-sm text-primary hover:underline"
+    >
+      Forgot Password?
+    </button>
+  </div>
+)}
               {loading ? (
                 <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
               ) : isLogin ? "Sign In" : "Create Account"}
