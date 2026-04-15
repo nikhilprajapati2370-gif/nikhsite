@@ -115,6 +115,18 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
+
+class ForgotPasswordRequest(BaseModel):
+    email: str
+
+
+class ResetPasswordRequest(BaseModel):
+    email: str
+    otp: str
+    new_password: str
+
+
+
 class ProductCreate(BaseModel):
     name: str
     description: str
@@ -168,6 +180,62 @@ class OrderStatusUpdate(BaseModel):
 
 
 # ── Auth Endpoints ─────────────────────────────────────────────────────────
+
+@api_router.post("/auth/forgot-password")
+async def forgot_password(data: ForgotPasswordRequest):
+    email = data.email.lower().strip()
+    user = await db.users.find_one({"email": email})
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    otp = str(random.randint(100000, 999999))
+    expiry = datetime.now(timezone.utc) + timedelta(minutes=10)
+
+    await db.users.update_one(
+        {"email": email},
+        {"$set": {"reset_otp": otp, "otp_expiry": expiry.isoformat()}}
+    )
+
+    await send_otp_email(email, otp)
+
+    return {"message": "OTP sent to email"}
+
+
+
+
+
+
+@api_router.post("/auth/reset-password")
+async def reset_password(data: ResetPasswordRequest):
+    user = await db.users.find_one({"email": data.email})
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user.get("reset_otp") != data.otp:
+        raise HTTPException(status_code=400, detail="Invalid OTP")
+
+    expiry = datetime.fromisoformat(user["otp_expiry"])
+    if datetime.now(timezone.utc) > expiry:
+        raise HTTPException(status_code=400, detail="OTP expired")
+
+    new_hash = hash_password(data.new_password)
+
+    await db.users.update_one(
+        {"email": data.email},
+        {"$set": {"password_hash": new_hash},
+         "$unset": {"reset_otp": "", "otp_expiry": ""}}
+    )
+
+    return {"message": "Password reset successful"}
+
+
+
+
+
+
+
 
 @api_router.post("/auth/register")
 async def register(data: UserRegister):
