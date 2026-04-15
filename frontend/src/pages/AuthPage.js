@@ -221,7 +221,11 @@ const AuthPage = ({ mode = "login" }) => {
                 
 
 
-                
+             {loading ? (
+                <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+              ) : isLogin ? "Sign In" : "Create Account"}
+            </button>
+                               
                 {isLogin && (
   <div className="text-right mt-2">
     <button
@@ -233,10 +237,10 @@ const AuthPage = ({ mode = "login" }) => {
     </button>
   </div>
 )}
-              {loading ? (
-                <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-              ) : isLogin ? "Sign In" : "Create Account"}
-            </button>
+  
+
+
+                
           </form>
 
           
