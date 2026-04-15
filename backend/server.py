@@ -203,10 +203,6 @@ async def forgot_password(data: ForgotPasswordRequest):
     return {"message": "OTP sent to email"}
 
 
-
-
-
-
 @api_router.post("/auth/reset-password")
 async def reset_password(data: ResetPasswordRequest):
     user = await db.users.find_one({"email": data.email})
@@ -230,13 +226,6 @@ async def reset_password(data: ResetPasswordRequest):
     )
 
     return {"message": "Password reset successful"}
-
-
-
-
-
-
-
 
 @api_router.post("/auth/register")
 async def register(data: UserRegister):
