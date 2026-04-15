@@ -210,25 +210,18 @@ const AuthPage = ({ mode = "login" }) => {
                   data-testid="confirm-password-input"
                 />
               </div>
-            )}
+            )}  
 
             <button
               type="submit"
-               {isLogin && (
-  <p className="text-right text-sm mt-2">
-    <button
-      type="button"
-      onClick={() => navigate("/forgot-password")}
-      className="text-primary hover:underline"
-    >
-      Forgot Password?
-    </button>
-  </p>
-)}
-              disabled={loading}
+           disabled={loading}
               className="w-full btn-primary py-3 rounded-md text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
               data-testid="auth-submit-button"
             >
+                
+
+
+                
                 {isLogin && (
   <div className="text-right mt-2">
     <button
