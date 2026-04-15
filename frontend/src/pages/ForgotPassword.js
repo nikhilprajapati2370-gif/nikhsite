@@ -2,8 +2,28 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("");
+  const [step, setStep] = useState(1);
+const [email, setEmail] = useState("");
+const [otp, setOtp] = useState("");
+const [newPassword, setNewPassword] = useState("");
+
+const sendOtp = async () => {
+  await fetch("/api/auth/forgot-password", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ email })
+  });
+  setStep(2);
+};
+
+  const resetPassword = async () => {
+  await fetch("/api/auth/reset-password", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ email, otp, new_password: newPassword })
+  });
+};
+  
 
   const handleSendOtp = async () => {
     try {
