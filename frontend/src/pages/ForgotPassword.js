@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);
@@ -9,14 +10,11 @@ const ForgotPassword = () => {
 
   const sendOtp = async () => {
     try {
-      const res = await fetch("/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-      setMsg(data.message || "OTP sent");
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
+        { email }
+      );
+      setMsg("OTP sent to your email");
       setStep(2);
     } catch (err) {
       setMsg("Error sending OTP");
@@ -25,30 +23,26 @@ const ForgotPassword = () => {
 
   const resetPassword = async () => {
     try {
-      const res = await fetch("/api/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/reset-password`,
+        {
           email,
           otp,
           new_password: newPassword,
-        }),
-      });
-
-      const data = await res.json();
-      setMsg(data.message || "Password reset successful");
+        }
+      );
+      setMsg("Password reset successful");
+      setStep(1);
     } catch (err) {
-      setMsg("Error resetting password");
+      setMsg("Invalid OTP or error");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center text-white">
       <div className="bg-black p-6 rounded-md w-80">
-
         <h2 className="text-xl mb-4">Forgot Password</h2>
 
-        {/* STEP 1 */}
         {step === 1 && (
           <>
             <input
@@ -59,16 +53,12 @@ const ForgotPassword = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <button
-              onClick={sendOtp}
-              className="w-full bg-yellow-400 text-black p-2"
-            >
+            <button onClick={sendOtp} className="w-full bg-yellow-400 text-black p-2">
               Send OTP
             </button>
           </>
         )}
 
-        {/* STEP 2 */}
         {step === 2 && (
           <>
             <input
@@ -87,16 +77,13 @@ const ForgotPassword = () => {
               onChange={(e) => setNewPassword(e.target.value)}
             />
 
-            <button
-              onClick={resetPassword}
-              className="w-full bg-green-500 text-black p-2"
-            >
+            <button onClick={resetPassword} className="w-full bg-yellow-400 text-black p-2">
               Reset Password
             </button>
           </>
         )}
 
-        <p className="mt-3 text-sm text-center">{msg}</p>
+        <p className="mt-3 text-sm">{msg}</p>
       </div>
     </div>
   );
