@@ -151,7 +151,7 @@ const AuthPage = ({ mode = "login" }) => {
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  placeholder="John Doe"
+                  placeholder="Your Nmane"
                   required={!isLogin}
                   className="w-full bg-input border border-white/10 text-white text-sm px-4 py-3 rounded-md focus:outline-none focus:border-primary/50 focus:bg-white/5 transition-all placeholder-gray-600"
                   data-testid="name-input"
