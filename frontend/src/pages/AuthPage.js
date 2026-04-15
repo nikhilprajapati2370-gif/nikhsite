@@ -224,14 +224,7 @@ const AuthPage = ({ mode = "login" }) => {
             </button>
           </form>
 
-          {/* Admin hint */}
-          {isLogin && (
-            <div className="mt-4 p-3 bg-white/3 border border-white/10 rounded-md">
-              <p className="text-xs text-gray-600">
-                Admin: <span className="text-gray-500 font-mono">admin@buildoreo.com</span> / <span className="text-gray-500 font-mono">admin123</span>
-              </p>
-            </div>
-          )}
+          
         </motion.div>
       </div>
     </div>
