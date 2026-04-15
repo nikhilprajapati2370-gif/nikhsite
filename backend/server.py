@@ -87,22 +87,25 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
         raise HTTPException(status_code=403, detail="Admin access required")
     return current_user
 
-async def send_otp_email(to_email: str, otp: str):
+
+   async def send_otp_email(to_email: str, otp: str):
     msg = EmailMessage()
-    msg["From"] = os.environ.get("EMAIL_USER")
+    msg["From"] = os.environ["EMAIL_USER"]
     msg["To"] = to_email
     msg["Subject"] = "Buildoreo Password Reset OTP"
-
-    msg.set_content(f"Your OTP for password reset is: {otp}")
+    
+    msg.set_content(f"Your OTP is: {otp}\nValid for 10 minutes.")
 
     await aiosmtplib.send(
         msg,
         hostname="smtp.gmail.com",
         port=587,
         start_tls=True,
-        username=os.environ.get("EMAIL_USER"),
-        password=os.environ.get("EMAIL_PASS"),
+        username=os.environ["EMAIL_USER"],
+        password=os.environ["EMAIL_PASS"],
     )
+
+
 
 
 # ── Models ────────────────────────────────────────────────────────────────────
