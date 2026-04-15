@@ -11,6 +11,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import AuthPage from "./pages/AuthPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -41,7 +42,7 @@ function App() {
         <AuthProvider>
           <CartProvider>
             <Routes>
-             
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/:id" element={<ProductDetailPage />} />
