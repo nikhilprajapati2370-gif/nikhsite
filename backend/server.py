@@ -1,6 +1,5 @@
 import aiosmtplib
 import random
-import aiosmtplib
 from email.message import EmailMessage
 import os
 import bcrypt 
@@ -88,7 +87,9 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
     return current_user
 
 
-   async def send_otp_email(to_email: str, otp: str):
+   # ── Email OTP Sender ─────────────────────────────
+
+async def send_otp_email(to_email: str, otp: str):
     msg = EmailMessage()
     msg["From"] = os.environ["EMAIL_USER"]
     msg["To"] = to_email
