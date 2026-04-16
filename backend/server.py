@@ -91,21 +91,19 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
 async def send_otp_email(to_email: str, otp: str):
     try:
         message = Mail(
-            from_email=os.environ["EMAIL_FROM"],
+            from_email=os.getenv("EMAIL_FROM"),
             to_emails=to_email,
-            subject="Buildoreo Password Reset OTP",
-            plain_text_content=f"Your OTP is: {otp} (valid 10 minutes)"
+            subject="Password Reset OTP",
+            html_content=f"<h2>Your OTP is: {otp}</h2>"
         )
 
-        sg = SendGridAPIClient(os.environ["SENDGRID_API_KEY"])
+        sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
         response = sg.send(message)
 
-        print("✅ OTP sent to:", to_email)
-        print("Status Code:", response.status_code)
+        print("✅ Email sent:", response.status_code)
 
     except Exception as e:
         print("❌ Email error:", str(e))
-
     
 
 
@@ -187,28 +185,32 @@ class OrderStatusUpdate(BaseModel):
 
 
 # ── Auth Endpoints ─────────────────────────────────────────────────────────
-@api_router.post("/auth/forgot-password")
+@app.post("/forgot-password")
 async def forgot_password(data: ForgotPasswordRequest):
     email = data.email.lower().strip()
 
-    print("Sending OTP to:", email)
+    print("📩 OTP requested for:", email)
 
     user = await db.users.find_one({"email": email})
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
+    # Generate OTP
     otp = str(random.randint(100000, 999999))
-    expiry = datetime.now(timezone.utc) + timedelta(minutes=10)
 
+    print("🔐 Generated OTP:", otp)
+
+    # Save OTP in DB (optional but recommended)
     await db.users.update_one(
         {"email": email},
-        {"$set": {"reset_otp": otp, "otp_expiry": expiry.isoformat()}}
+        {"$set": {"otp": otp}}
     )
 
+    # Send Email
     await send_otp_email(email, otp)
 
-    return {"message": "OTP sent to email"}
+    return {"message": "OTP sent successfully"}
 
 
 
