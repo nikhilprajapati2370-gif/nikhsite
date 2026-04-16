@@ -185,7 +185,7 @@ class OrderStatusUpdate(BaseModel):
 
 
 # ── Auth Endpoints ─────────────────────────────────────────────────────────
-@app.post("/forgot-password")
+@api_router.post("/auth/forgot-password")
 async def forgot_password(data: ForgotPasswordRequest):
     email = data.email.lower().strip()
 
@@ -198,10 +198,21 @@ async def forgot_password(data: ForgotPasswordRequest):
 
     # Generate OTP
     otp = str(random.randint(100000, 999999))
+    expiry = datetime.now(timezone.utc) + timedelta(minutes=10)
 
     print("🔐 Generated OTP:", otp)
 
-   
+    # ✅ SAVE OTP IN DATABASE
+    await db.users.update_one(
+        {"email": email},
+        {
+            "$set": {
+                "reset_otp": otp,
+                "otp_expiry": expiry.isoformat()
+            }
+        }
+    )
+
     # Send Email
     await send_otp_email(email, otp)
 
