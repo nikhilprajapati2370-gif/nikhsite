@@ -87,22 +87,29 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
     if current_user.get("role") != "admin":
         raise HTTPException(status_code=403, detail="Admin access required")
     return current_user
-    
 
 async def send_otp_email(to_email: str, otp: str):
-    message = Mail(
-        from_email=os.environ["EMAIL_FROM"],
-        to_emails=to_email,
-        subject="Buildoreo Password Reset OTP",
-        plain_text_content=f"Your OTP is: {otp} (valid 10 min)"
-    )
-
     try:
+        message = Mail(
+            from_email=os.environ["EMAIL_FROM"],
+            to_emails=to_email,
+            subject="Buildoreo Password Reset OTP",
+            plain_text_content=f"Your OTP is: {otp} (valid 10 minutes)"
+        )
+
         sg = SendGridAPIClient(os.environ["SENDGRID_API_KEY"])
-        sg.send(message)
-        print("OTP sent to:", to_email)
+        response = sg.send(message)
+
+        print("✅ OTP sent to:", to_email)
+        print("Status Code:", response.status_code)
+
     except Exception as e:
-        print("Email error:", str(e))
+        print("❌ Email error:", str(e))
+
+
+    
+
+
 
 
 # ── Models ────────────────────────────────────────────────────────────────────
@@ -184,9 +191,9 @@ class OrderStatusUpdate(BaseModel):
 
 @api_router.post("/auth/forgot-password")
 async def forgot_password(data: ForgotPasswordRequest):
-    email = data.email.lower().strip()
-        print("OTP requested for:", email)
-    user = await db.users.find_one({"email": email})
+  email = data.email.lower().strip()
+  print("Sending OTP to:", email)
+  user = await db.users.find_one({"email": email}) 
    
 
     if not user:
