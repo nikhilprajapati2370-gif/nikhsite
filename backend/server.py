@@ -90,21 +90,26 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
 
 async def send_otp_email(to_email: str, otp: str):
     try:
+        print("📨 Trying to send OTP to:", to_email)
+
         message = Mail(
             from_email=os.environ["EMAIL_FROM"],
             to_emails=to_email,
             subject="Buildoreo Password Reset OTP",
-            plain_text_content=f"Your OTP is: {otp} (valid 10 minutes)"
+            plain_text_content=f"Your OTP is: {otp}"
         )
 
         sg = SendGridAPIClient(os.environ["SENDGRID_API_KEY"])
         response = sg.send(message)
 
-        print("✅ OTP sent to:", to_email)
+        print("✅ Email sent!")
         print("Status Code:", response.status_code)
+        print("Response Body:", response.body)
 
     except Exception as e:
-        print("❌ Email error:", str(e))
+        print("❌ EMAIL ERROR:", str(e))
+
+
 
 
     
