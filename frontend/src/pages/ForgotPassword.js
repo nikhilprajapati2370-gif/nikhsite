@@ -9,6 +9,7 @@ const ForgotPassword = () => {
   const [msg, setMsg] = useState("");
 
   const sendOtp = async () => {
+    console.log("Sending email:", email);
     try {
       await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
