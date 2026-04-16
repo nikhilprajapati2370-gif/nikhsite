@@ -90,21 +90,19 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
     
 
 async def send_otp_email(to_email: str, otp: str):
+    message = Mail(
+        from_email=os.environ["EMAIL_FROM"],
+        to_emails=to_email,
+        subject="Buildoreo Password Reset OTP",
+        plain_text_content=f"Your OTP is: {otp} (valid 10 min)"
+    )
+
     try:
-        message = Mail(
-            from_email=os.environ["EMAIL_USER"],   # verified sender
-            to_emails=to_email,
-            subject="Buildoreo Password Reset OTP",
-            html_content=f"<strong>Your OTP is: {otp}</strong><br>Valid for 10 minutes."
-        )
-
         sg = SendGridAPIClient(os.environ["SENDGRID_API_KEY"])
-        response = sg.send(message)
-
-        print(f"✅ Email sent to {to_email}, status: {response.status_code}")
-
+        sg.send(message)
+        print("OTP sent to:", to_email)
     except Exception as e:
-        print(f"❌ SendGrid Error: {str(e)}")
+        print("Email error:", str(e))
 
 
 # ── Models ────────────────────────────────────────────────────────────────────
@@ -187,7 +185,7 @@ class OrderStatusUpdate(BaseModel):
 @api_router.post("/auth/forgot-password")
 async def forgot_password(data: ForgotPasswordRequest):
     email = data.email.lower().strip()
-     print("OTP requested for:", email)
+        print("OTP requested for:", email)
     user = await db.users.find_one({"email": email})
    
 
