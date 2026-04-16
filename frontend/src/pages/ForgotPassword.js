@@ -10,8 +10,7 @@ const ForgotPassword = () => {
 
   const sendOtp = async () => {
   try {
-    console.log("Sending email:", email);   // ✅ CORRECT
-
+   
     await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
       { email }
@@ -19,6 +18,8 @@ const ForgotPassword = () => {
 
     setMsg("OTP sent to your email");
     setStep(2);
+     console.log("Sending email:", email);   // ✅ CORRECT
+
   } catch (err) {
     setMsg(err.response?.data?.detail || "Error sending OTP");
   }
