@@ -188,13 +188,13 @@ class OrderStatusUpdate(BaseModel):
 
 
 # ── Auth Endpoints ─────────────────────────────────────────────────────────
-
 @api_router.post("/auth/forgot-password")
 async def forgot_password(data: ForgotPasswordRequest):
-  email = data.email.lower().strip()
-  print("Sending OTP to:", email)
-  user = await db.users.find_one({"email": email}) 
-   
+    email = data.email.lower().strip()
+
+    print("Sending OTP to:", email)
+
+    user = await db.users.find_one({"email": email})
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -210,6 +210,7 @@ async def forgot_password(data: ForgotPasswordRequest):
     await send_otp_email(email, otp)
 
     return {"message": "OTP sent to email"}
+
 
 
 @api_router.post("/auth/reset-password")
