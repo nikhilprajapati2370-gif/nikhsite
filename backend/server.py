@@ -190,6 +190,7 @@ class OrderStatusUpdate(BaseModel):
 async def forgot_password(data: ForgotPasswordRequest):
     email = data.email.lower().strip()
     user = await db.users.find_one({"email": email})
+    print("OTP requested for:", email)
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
