@@ -201,12 +201,7 @@ async def forgot_password(data: ForgotPasswordRequest):
 
     print("🔐 Generated OTP:", otp)
 
-    # Save OTP in DB (optional but recommended)
-    await db.users.update_one(
-        {"email": email},
-        {"$set": {"otp": otp}}
-    )
-
+   
     # Send Email
     await send_otp_email(email, otp)
 
