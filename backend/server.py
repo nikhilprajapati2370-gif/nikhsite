@@ -1,4 +1,4 @@
-import aiosmtplib
+
 import random
 from email.message import EmailMessage
 import os
@@ -8,6 +8,8 @@ import razorpay
 import uuid
 import hmac
 import hashlib
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import List, Optional, Annotated
@@ -89,27 +91,20 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
 
 async def send_otp_email(to_email: str, otp: str):
     try:
-        msg = EmailMessage()
-        msg["From"] = os.environ["EMAIL_USER"]
-        msg["To"] = to_email
-        msg["Subject"] = "Buildoreo Password Reset OTP"
-        
-        msg.set_content(f"Your OTP is: {otp}\nValid for 10 minutes.")
-
-        await aiosmtplib.send(
-            msg,
-            hostname="smtp.gmail.com",
-            port=587,
-            start_tls=True,
-            username=os.environ["EMAIL_USER"],
-            password=os.environ["EMAIL_PASS"],
+        message = Mail(
+            from_email=os.environ["EMAIL_USER"],   # verified sender
+            to_emails=to_email,
+            subject="Buildoreo Password Reset OTP",
+            html_content=f"<strong>Your OTP is: {otp}</strong><br>Valid for 10 minutes."
         )
 
-        print(f"✅ OTP sent successfully to {to_email}")
+        sg = SendGridAPIClient(os.environ["SENDGRID_API_KEY"])
+        response = sg.send(message)
+
+        print(f"✅ Email sent to {to_email}, status: {response.status_code}")
 
     except Exception as e:
-        print(f"❌ Email sending failed: {str(e)}")
-  
+        print(f"❌ SendGrid Error: {str(e)}")
 
 
 # ── Models ────────────────────────────────────────────────────────────────────
