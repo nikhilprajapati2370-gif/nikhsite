@@ -85,28 +85,31 @@ async def get_admin_user(current_user: dict = Depends(get_current_user)):
     if current_user.get("role") != "admin":
         raise HTTPException(status_code=403, detail="Admin access required")
     return current_user
-
-
-   # ── Email OTP Sender ─────────────────────────────
+    
 
 async def send_otp_email(to_email: str, otp: str):
-    msg = EmailMessage()
-    msg["From"] = os.environ["EMAIL_USER"]
-    msg["To"] = to_email
-    msg["Subject"] = "Buildoreo Password Reset OTP"
-    
-    msg.set_content(f"Your OTP is: {otp}\nValid for 10 minutes.")
+    try:
+        msg = EmailMessage()
+        msg["From"] = os.environ["EMAIL_USER"]
+        msg["To"] = to_email
+        msg["Subject"] = "Buildoreo Password Reset OTP"
+        
+        msg.set_content(f"Your OTP is: {otp}\nValid for 10 minutes.")
 
-    await aiosmtplib.send(
-        msg,
-        hostname="smtp.gmail.com",
-        port=587,
-        start_tls=True,
-        username=os.environ["EMAIL_USER"],
-        password=os.environ["EMAIL_PASS"],
-    )
+        await aiosmtplib.send(
+            msg,
+            hostname="smtp.gmail.com",
+            port=587,
+            start_tls=True,
+            username=os.environ["EMAIL_USER"],
+            password=os.environ["EMAIL_PASS"],
+        )
 
+        print(f"✅ OTP sent successfully to {to_email}")
 
+    except Exception as e:
+        print(f"❌ Email sending failed: {str(e)}")
+  
 
 
 # ── Models ────────────────────────────────────────────────────────────────────
