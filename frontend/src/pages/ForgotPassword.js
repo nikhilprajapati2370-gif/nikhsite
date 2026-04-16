@@ -9,19 +9,20 @@ const ForgotPassword = () => {
   const [msg, setMsg] = useState("");
 
   const sendOtp = async () => {
-    console.log("Sending email:", email);
-    try {
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
-        { email }
-      );
-      setMsg("OTP sent to your email");
-      setStep(2);
-    } catch (err) {
-      setMsg("Error sending OTP");
-    }
-  };
+  try {
+    console.log("Sending email:", email);   // ✅ CORRECT
 
+    await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
+      { email }
+    );
+
+    setMsg("OTP sent to your email");
+    setStep(2);
+  } catch (err) {
+    setMsg(err.response?.data?.detail || "Error sending OTP");
+  }
+};
   const resetPassword = async () => {
     try {
       await axios.post(
