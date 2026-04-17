@@ -96,7 +96,7 @@ async def send_otp_email(to_email: str, otp: str):
             from_email=os.getenv("EMAIL_FROM"),
             to_emails=to_email,
             subject="Password Reset Request – BuildOreo ",
-            html_content=f"<h1>Dear User,
+            html_content="<h1>Dear User,
 
       We received a request to reset the password 
       associated with your BuildOreo account. If you initiated
