@@ -95,8 +95,24 @@ async def send_otp_email(to_email: str, otp: str):
         message = Mail(
             from_email=os.getenv("EMAIL_FROM"),
             to_emails=to_email,
-            subject="OTP Test BuildOreo",
-            html_content=f"<h1>Your OTP: {otp}</h1>"
+            subject="Password Reset Request – BuildOreo ",
+            html_content=f"<h1>Dear User,
+
+      We received a request to reset the password 
+      associated with your BuildOreo account. If you initiated
+      this request, please use the secure otp provided to create 
+      a new password and regain access to your account. For your 
+      safety, this otp will expire after a limited time. If
+      you did not request a password reset, you can safely ignore 
+      this email—your account will remain secure. We strongly recommend
+     choosing a strong and unique password to protect your account.
+
+If you need any assistance, feel free to contact our support team.
+
+Your OTP: {otp}
+Best regards,
+BuildOreo Team
+buildoreo.tech@gmail.com  </h1>"
         )
 
         sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
