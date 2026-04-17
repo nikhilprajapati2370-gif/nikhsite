@@ -95,35 +95,49 @@ async def send_otp_email(to_email: str, otp: str):
         message = Mail(
             from_email=os.getenv("EMAIL_FROM"),
             to_emails=to_email,
-            subject="Password Reset Request – BuildOreo ",
-            html_content="<h1>Dear User,
+            subject="BuildOreo Password Reset OTP",
+            html_content=f"""
+<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    
+    <h2>Dear User,</h2>
 
-      We received a request to reset the password 
-      associated with your BuildOreo account. If you initiated
-      this request, please use the secure otp provided to create 
-      a new password and regain access to your account. For your 
-      safety, this otp will expire after a limited time. If
-      you did not request a password reset, you can safely ignore 
-      this email—your account will remain secure. We strongly recommend
-     choosing a strong and unique password to protect your account.
+    <p>
+        We received a request to reset the password associated with your <b>BuildOreo</b> account.
+    </p>
 
-If you need any assistance, feel free to contact our support team.
+    <p>
+        If you initiated this request, please use the secure OTP below to create a new password:
+    </p>
 
-Your OTP: {otp}
-Best regards,
-BuildOreo Team
-buildoreo.tech@gmail.com  </h1>"
+    <h1 style="color: #2d89ef;">{otp}</h1>
+
+    <p>This OTP will expire in 10 minutes.</p>
+
+    <p>
+        If you did not request this, you can ignore this email.
+    </p>
+
+    <br>
+
+    <p>
+        Best regards,<br>
+        <b>BuildOreo Team</b><br>
+        <a href="mailto:buildoreo.tech@gmail.com">buildoreo.tech@gmail.com</a>
+    </p>
+
+</div>
+"""
         )
 
         sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
         response = sg.send(message)
 
         print("✅ STATUS:", response.status_code)
-        print("✅ BODY:", response.body)
-        print("✅ HEADERS:", response.headers)
 
     except Exception as e:
         print("❌ EMAIL ERROR:", str(e))
+
+
 
 
 
